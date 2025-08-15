@@ -5,9 +5,11 @@ import { getToken } from "next-auth/jwt";
 export async function middleware(request: NextRequest) {
   const token = await getToken({ req: request });
   const url = request.nextUrl;
+
   if (url.host !== request.headers.get("host")) {
     return new NextResponse("Invalid host", { status: 400 });
   }
+  
   if (!request.headers.get("user-agent")) {
     return new NextResponse("Bad request", { status: 400 });
   }
